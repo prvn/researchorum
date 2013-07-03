@@ -9,9 +9,14 @@ from flask import Flask
 from flask import request
 from flask import render_template
 
+# imports for testing purposes
+from testDataProvider import TestDataProvider
+
 #better to hardcode package name, improves flask debugging
 app = Flask('researchorum')
 
+# Test data provider
+testDataProvider = TestDataProvider()
 
 def _get_account(username=None):
     """
@@ -20,7 +25,6 @@ def _get_account(username=None):
     """
     #return a dummy dict for now
     return {'username': username, 'name': 'John Doe', 'Research medals': 5}
-
 
 def _get_search_results(query=None):
     """
@@ -32,11 +36,9 @@ def _get_search_results(query=None):
     #return an empty dict for now
     return {'payload': '{'+query+'}'}
 
-
 @app.route("/")
 def home():
     return render_template("home.html")
-
 
 @app.route("/login", methods=['POST'])
 def login():
@@ -45,14 +47,12 @@ def login():
     # print account
     return render_template("login.html", acc=account, err=error)
 
-
 @app.route("/search", methods=['POST'])
 def searchPage():
     error = None
     search = _get_search_results(request.form['search'])
     # print search
     return render_template("search.html", search=search, err=error)
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
