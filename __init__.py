@@ -11,7 +11,7 @@ if __name__ == '__main__':
 	app.run()
 
 def register_blueprints(app):
-	from tumblelog.views import posts
+	from researchorum.views import posts
 	app.register_blueprint(posts)
 
 register_blueprints(app)
