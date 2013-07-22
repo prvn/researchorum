@@ -15,7 +15,7 @@ class DetailView(MethodView):
 
 	form = model_form(Comment, exclude=['created_at'])
 
-	def get_context(self, slub):
+	def get_context(self, slug):
 		post = Post.objects.get_or_404(slug=slug)
 		form = self.form(request.form)
 		
@@ -26,8 +26,8 @@ class DetailView(MethodView):
 		return context
 
 	def get(self, slug):
-		post = Post.objects.get_or_404(slug=slug)
-		return render_template('posts/detail.html', post=post)
+		context = self.get_context(slug)
+		return render_template('posts/detail.html', **context)
 
 	def post(self, slug):
 		context = self.get_context(slug)
