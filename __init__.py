@@ -8,10 +8,10 @@ app.config["SECRET_KEY"] = "KeepThisS3cr3t"
 db = MongoEngine(app)
 
 if __name__ == '__main__':
-	app.run()
+    app.run()
 
 def register_blueprints(app):
-	from researchorum.views import posts
-	app.register_blueprint(posts)
+    from researchorum.views import posts
+    app.register_blueprint(posts)
 
 register_blueprints(app)
