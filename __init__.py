@@ -12,6 +12,9 @@ if __name__ == '__main__':
 
 def register_blueprints(app):
     from researchorum.views import posts
+    from researchorum.admin import admin
     app.register_blueprint(posts)
+    app.register_blueprint(admin)
 
 register_blueprints(app)
+
