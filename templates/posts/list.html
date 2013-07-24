@@ -11,10 +11,10 @@
         <div style="display: none;">
        	    {% if post.body %}
                 {% if post.post_type == 'Quote' %}
-  					<blockquote>{{ post.body|truncate(100) }}</blockquote>
+  					<blockquote>{{ post.body}}</blockquote>
 				    <p>{{ post.author }}</p>
 				{% else %}
-    				<p>{{ post.body|truncate(100) }}</p>
+    				<p>{{ post.body}}</p>
   				{% endif %}
 			{% endif %}
 			{% if post.embed_code %}
