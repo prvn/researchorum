@@ -1,14 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <input style="width: 400px;" type="text" id="search" name="search" value="Search"/>
+    <br/><br/>
     {% for post in posts %}
-      <h2><a href="{{ url_for('posts.detail', slug=post.slug) }}">{{ post.title }}</a></h2>
-      <p>{{ post.body|truncate(100) }}</p>
-      <p>
-        {{ post.created_at.strftime('%H:%M %Y-%m-%d') }} |
-        {% with total=post.comments|length %}
+        <h2><a href="{{ url_for('posts.detail', slug=post.slug) }}">{{ post.title }}</a></h2>
+        <p>
+            <a href="#" class="button" title="Abstract"><span>Abstract</span></a>
+        </p>
+        <div style="display: none;">
+            <p>{{ post.body|truncate(100) }}</p>
+        </div>
+        <p>
+            {{ post.created_at.strftime('%H:%M %Y-%m-%d') }} |
+            {% with total=post.comments|length %}
             {{ total }} comment {%- if total > 1 %}s{%- endif -%}
-        {% endwith %}
-      </p>
+            {% endwith %}
+        </p>
     {% endfor %}
 {% endblock %}
