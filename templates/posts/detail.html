@@ -8,12 +8,25 @@
 {% endblock %}
 
 {% block content %}
-  {% if post.body %}
-    {% if post.post_type == 'Quote' %}
-      <blockquote>{{ post.body }}</blockquote>
-      <p>{{ post.author }}</p>
-    {% else %}
-      <p>{{ post.body }}</p>
+   {% if post.body %}
+    	{% if post.post_type == 'Quote' %}
+      		<blockquote>{{ post.body }}</blockquote>
+      		<p>{{ post.author }}</p>
+    	{% else %}
+	{% if post.body %}
+  		{% if post.post_type == 'Quote' %}
+    			<blockquote>{{ post.body }}</blockquote>
+    			<p>{{ post.author }}</p>
+  		{% else %}
+    			<p>{{ post.body }}</p>
+  		{% endif %}
+	{% endif %}
+	{% if post.embed_code %}
+  		{{ post.embed_code|safe() }}
+	{% endif %}
+	{% if post.image_url %}
+		<p><img src="{{ post.image_url }}" /><p>
+	{% endif %}
     {% endif %}
   {% endif %}
   {% if post.embed_code %}
@@ -35,7 +48,7 @@
   <hr>
   <h2>Add a comment</h2>
   <form action="." method="post">
-    {{ forms.render(form) }}
+	{{ forms.render(form) }}
     <div class="actions">
       <input type="submit" class="btn primary" value="comment">
     </div>
