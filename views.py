@@ -6,9 +6,21 @@ from flask.ext.mongoengine.wtf import model_form
 posts = Blueprint('posts', __name__, template_folder='templates')
 
 class ListView(MethodView):
-
+    
     def get(self):
+        print "In get()"
         posts = Post.objects.all()
+        return render_template('posts/list.html', posts=posts)
+
+class SearchView(MethodView):
+
+    def get(self, query):
+        print "In search() - Query : ", query
+        if query is not None:
+            posts = Post.objects(title__icontains=query)
+
+        print "Returned posts: ", posts
+
         return render_template('posts/list.html', posts=posts)
 
 class DetailView(MethodView):
@@ -45,5 +57,6 @@ class DetailView(MethodView):
 
         return render_template('posts/detail.html', **context)
 
-posts.add_url_rule('/', view_func=ListView.as_view('list'))
+posts.add_url_rule('/', view_func=ListView.as_view('list'), methods=['GET',])
+posts.add_url_rule('/search/<string:query>', view_func=SearchView.as_view('search-list'), methods=['GET',])
 posts.add_url_rule('/<slug>/', view_func=DetailView.as_view('detail'))
