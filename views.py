@@ -8,20 +8,16 @@ posts = Blueprint('posts', __name__, template_folder='templates')
 class ListView(MethodView):
     
     def get(self):
-        print "In get()"
         posts = Post.objects.all()
         return render_template('posts/list.html', posts=posts)
 
 class SearchView(MethodView):
 
     def get(self, query):
-        print "In search() - Query : ", query
         if query is not None:
             posts = Post.objects(title__icontains=query)
 
-        print "Returned posts: ", posts
-
-        return render_template('posts/list.html', posts=posts)
+        return render_template('posts/list.html', posts=posts, query=query)
 
 class DetailView(MethodView):
 
