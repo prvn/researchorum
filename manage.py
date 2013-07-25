@@ -4,6 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask.ext.script import Manager, Server
 from researchorum import app
 
+app.debug = True
 manager = Manager(app)
 
 manager.add_command("runserver", Server(
