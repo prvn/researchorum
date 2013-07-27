@@ -9,6 +9,9 @@
             var search_url = base_url + "/search/" + document.getElementById("search").value;
             window.location.href = search_url;
         }
+        $(document).ready(function() {
+                document.getElementById('search').value = "{{ query }}"; 
+        });
     </script>
 {% endblock %}
 {% block content %}
