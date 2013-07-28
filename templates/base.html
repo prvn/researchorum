@@ -12,9 +12,10 @@
                 var div = $(this).parent().next();
                 if(div.is(":visible")) {
                     div.hide();
-                    } else {
+                } else {
                     div.fadeIn(450);
                 };
+                return false;
             });
         });
     </script>
