@@ -23,6 +23,6 @@
 {%- endblock -%}
 
 {% block js_footer %}
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-dropdown.js') }}"></script>
   <script src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-dropdown.js"></script>
 {% endblock %}
