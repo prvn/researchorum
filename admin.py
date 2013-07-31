@@ -32,7 +32,7 @@ class Detail(MethodView):
             post = Post.objects.get_or_404(slug=slug)
             # Handle old posts types as well
             cls = post.__class__ if post.__class__ != Post else BlogPost
-            form_cls = model_form(cls,  exclude=('created_at', 'comments'))
+            form_cls = model_form(cls,  exclude=('created_at', 'comments', 'display_tags'))
             if request.method == 'POST':
                 form = form_cls(request.form, inital=post._data)
             else:
@@ -41,8 +41,9 @@ class Detail(MethodView):
             # Determine which post type we need
             cls = self.class_map.get(request.args.get('type', 'post'))
             post = cls()
-            form_cls = model_form(cls,  exclude=('created_at', 'comments'))
+            form_cls = model_form(cls,  exclude=('created_at', 'comments', 'display_tags'))
             form = form_cls(request.form)
+
         context = {
             "post": post,
             "form": form,
@@ -61,6 +62,12 @@ class Detail(MethodView):
         if form.validate():
             post = context.get('post')
             form.populate_obj(post)
+            tags_list = []
+            for tag in post.tags.split(','):
+                tags_list.append(tag.strip())
+
+            post.display_tags = tags_list
+
             post.save()
 
             return redirect(url_for('admin.index'))
