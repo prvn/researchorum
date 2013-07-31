@@ -2,15 +2,8 @@
 {% block head %}
     {{ super() }}
     <script type="text/javascript">
-        function search() {
-            if (!window.location.origin)
-                window.location.origin = window.location.protocol+"//"+window.location.host;
-            var base_url = window.location.origin;
-            var search_url = base_url + "/search/" + document.getElementById("search").value;
-            window.location.href = search_url;
-        }
         $(document).ready(function() {
-                document.getElementById('search').value = "{{ query }}"; 
+            document.getElementById('search').value = "{{ query }}";
         });
     </script>
 {% endblock %}
@@ -42,7 +35,10 @@
         <p>
             {{ post.created_at.strftime('%H:%M %Y-%m-%d') }} |
             {% with total=post.comments|length %}
-            {{ total }} comment {%- if total > 1 %}s{%- endif -%}
+                {{ total }} comments |
+            {% with total_tags = post.display_tags|length %}
+                {{ total_tags }} tags
+            {% endwith %}
             {% endwith %}
         </p>
     {% endfor %}
