@@ -11,13 +11,22 @@ class ListView(MethodView):
         posts = Post.objects.all()
         return render_template('posts/list.html', posts=posts)
 
-class SearchView(MethodView):
+class SearchTitleView(MethodView):
 
     def get(self, query):
         if query is not None:
             posts = Post.objects(title__icontains=query)
 
         return render_template('posts/list.html', posts=posts, query=query)
+
+class SearchTagView(MethodView):
+
+    def get(self, tag):
+        if tag is not None:
+            print "Query: ", tag
+            posts = Post.objects(display_tags__all=[tag])
+
+        return render_template('posts/list.html', posts=posts, query=("#"+str(tag)))
 
 class DetailView(MethodView):
 
@@ -54,5 +63,6 @@ class DetailView(MethodView):
         return render_template('posts/detail.html', **context)
 
 posts.add_url_rule('/', view_func=ListView.as_view('list'), methods=['GET',])
-posts.add_url_rule('/search/<string:query>', view_func=SearchView.as_view('search-list'), methods=['GET',])
+posts.add_url_rule('/search/<string:query>', view_func=SearchTitleView.as_view('search-title-list'), methods=['GET',])
+posts.add_url_rule('/search/tag/<string:tag>', view_func=SearchTagView.as_view('search-tags-list'), methods=['GET',])
 posts.add_url_rule('/<slug>/', view_func=DetailView.as_view('detail'))

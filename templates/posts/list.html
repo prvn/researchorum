@@ -16,7 +16,7 @@
 {% endblock %}
 {% block content %}
     <form name="search-form" id="search-form" action="javascript:search()">
-        <input style="width: 400px;" type="text" id="search" name="search" placeholder="Search (ex: hadoop)"/>
+        <input style="width: 400px;" type="text" id="search" name="search" placeholder="Search (ex: hadoop or #hadoop for tag search)"/>
     </form>
     {% for post in posts %}
         <h2><a href="{{ url_for('posts.detail', slug=post.slug) }}">{{ post.title }}</a></h2>
