@@ -3,21 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Researchorum</title>
-    <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/researchorum.js') }}"></script>
     <style>.content {padding-top: 80px;}</style>
-    <script>
-        $(document).ready(function() {
-            $(".button").click(function () {
-                var div = $(this).parent().next();
-                if(div.is(":visible")) {
-                    div.hide();
-                    } else {
-                    div.fadeIn(450);
-                };
-            });
-        });
-    </script>
     {% block head %}
     {% endblock %}
   </head>
