@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $(".button").click(function () {
+    $("#abstract").click(function () {
         var div = $(this).parent().next();
         if(div.is(":visible")) {
             div.hide();

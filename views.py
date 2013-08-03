@@ -3,12 +3,20 @@ from flask.views import MethodView
 from researchorum.models import Post, Comment
 from flask.ext.mongoengine.wtf import model_form
 
+import random
+
 posts = Blueprint('posts', __name__, template_folder='templates')
 
 class ListView(MethodView):
     
     def get(self):
         posts = Post.objects.all()
+        # add random images before returning posts
+        for post in posts:
+            rand = random.randrange(1, 5)
+            post.image = request.base_url + "static/images/" + str(rand) + ".jpg"
+            print "Image: ", post.image
+
         return render_template('posts/list.html', posts=posts)
 
 class SearchTitleView(MethodView):
