@@ -13,7 +13,7 @@ class ListView(MethodView):
         posts = Post.objects.all()
         # add random images before returning posts
         for post in posts:
-            rand = random.randrange(1, 5)
+            rand = random.randrange(1, 8)
             post.image = request.base_url + "static/images/" + str(rand) + ".jpg"
             print "Image: ", post.image
 
