@@ -2,6 +2,10 @@ import datetime
 from flask import url_for
 from researchorum import db
 
+COMMENT_TYPE = (('Q', 'Help Me Understand'),
+        ('C', 'Collaboration Invite'),
+        ('S', 'Suggestion'))
+
 class Post(db.DynamicDocument):
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     title = db.StringField(max_length=255, required=True)
@@ -44,3 +48,5 @@ class Comment(db.EmbeddedDocument):
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     body = db.StringField(verbose_name="Comment", required=True)
     author = db.StringField(verbose_name="Name", max_length=255, required=True)
+    comment_type = db.StringField(required=True, choices=COMMENT_TYPE)
+
