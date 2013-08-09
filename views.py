@@ -3,13 +3,61 @@ from flask.views import MethodView
 from researchorum.models import Post, Comment
 from flask.ext.mongoengine.wtf import model_form
 
+from Util import *
+import math
+
+import random
+
 posts = Blueprint('posts', __name__, template_folder='templates')
 
 class ListView(MethodView):
+
+    items_per_page = 2
     
     def get(self):
-        posts = Post.objects.all()
-        return render_template('posts/list.html', posts=posts)
+        query_params = request.args
+        ipp = 10
+        page = 1
+
+        if len(query_params) != 0:
+            if query_params['ipp']:
+                ipp = int(str(query_params['ipp']))
+            else:
+                ipp = self.items_per_page
+
+            if query_params['pg']:
+                page = int(str(query_params['pg']))
+
+        print "IPP: ", ipp, "Page: ", page
+
+        if page > 1:
+            posts = Post.objects[(ipp*(page-1)):(ipp*page)]
+        else:
+            posts = Post.objects[:(ipp*page)]
+
+        total_posts = len(Post.objects)
+
+        print "Total Posts: ", total_posts
+
+        pagination_urls = []
+
+        if (total_posts > ipp):
+            # Add pagination
+            pp = total_posts/float(ipp)
+            print pp
+            print "Range: ", math.ceil(pp)
+            for i in range(1, int(math.ceil(pp)+1)):
+                url = Util.appendParam(request.base_url, "ipp", str(ipp), True)
+                pagination_urls.append(Util.appendParam(url, "pg", str(i), False))
+
+        print pagination_urls
+
+        # add random images before returning posts
+        for post in posts:
+            rand = random.randrange(1, 8)
+            post.image = request.base_url + "static/images/" + str(rand) + ".jpg"
+
+        return render_template('posts/list.html', posts=posts, pagination_urls=pagination_urls, ipp=ipp, pg=page)
 
 class SearchTitleView(MethodView):
 

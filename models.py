@@ -13,6 +13,8 @@ class Post(db.DynamicDocument):
     comments = db.ListField(db.EmbeddedDocumentField('Comment'))
     display_tags = db.ListField(db.StringField(max_length=255))
     tags = db.StringField(max_length=255)
+    authors = db.ListField(db.StringField(max_length=255))
+    #authors = db.StringField(max_length=512)
 
     def get_absolute_url(self):
         return url_for('post', kwargs={"slug": self.slug})
@@ -26,7 +28,7 @@ class Post(db.DynamicDocument):
 
     meta = {
         'allow_inheritance': True,
-        'indexes': ['-created_at', 'slug', 'title', 'display_tags'],
+        'indexes': ['-created_at', 'slug', 'title'],
         'ordering': ['-created_at']
     }
 

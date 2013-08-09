@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $(".button").click(function () {
+    $("#abstract").click(function () {
         var div = $(this).parent().next();
         if(div.is(":visible")) {
             div.hide();
@@ -16,11 +16,14 @@ function search() {
     window.location.href = search_url;
 }
 
-function buildUrl(query_term) {
+function getBaseUrl() {
     if (!window.location.origin)
         window.location.origin = window.location.protocol+"//"+window.location.host;
 
-    var base_url = window.location.origin;
+    return window.location.origin;
+}
+function buildUrl(query_term) {
+    var base_url = getBaseUrl();
 
     if(query_term.charAt(0) == '#') {
         query_term = query_term.substring(1);

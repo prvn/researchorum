@@ -1,17 +1,27 @@
 {% extends "base.html" %}
 {% block head %}
     {{ super() }}
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/simplePagination.css') }}"/>
     <script type="text/javascript">
         $(document).ready(function() {
             document.getElementById('search').value = "{{ query }}";
+            $('#light-pagination').pagination({
+                pages: {{ pagination_urls|length }},
+                hrefTextPrefix: getBaseUrl() + '?ipp=' + {{ ipp }} + '&pg=',
+                currentPage: {{ pg }},
+                cssStyle: 'light-theme'
+            });
         });
+        function getCurrentPage() {
+            return $("#light-pagination").pagination("getCurrentPage");
+        }
 		function toggle_visibility(id) {
        		var e = document.getElementById(id);
        		if(e.style.display == 'block')
           		e.style.display = 'none';
        		else
           		e.style.display = 'block';
-    }
+        }
     </script>
 {% endblock %}
 {% block content %}
@@ -19,34 +29,47 @@
         <input style="width: 400px;" type="text" id="search" name="search" placeholder="Search (ex: hadoop or #hadoop for tag search)"/>
     </form>
     {% for post in posts %}
-        <h2><a href="{{ url_for('posts.detail', slug=post.slug) }}">{{ post.title }}</a></h2>
-        <p>
-            <a href="#" class="button" title="Abstract">Abstract</a>&nbsp;
-		</p>
-        <div style="display: none;">
-       	    {% if post.body %}
-                {% if post.post_type == 'Quote' %}
-  					<blockquote>{{ post.body}}</blockquote>
-				    <p>{{ post.author }}</p>
-				{% else %}
-    				<p>{{ post.body}}</p>
-  				{% endif %}
-			{% endif %}
-			{% if post.embed_code %}
-  				{{ post.embed_code|safe() }}
-			{% endif %}
-			{% if post.image_url %}
-				<p><img src="{{ post.image_url }}" /><p>
-			{% endif %}
-	</div>
-        <p>
-            {{ post.created_at.strftime('%H:%M %Y-%m-%d') }} |
-            {% with total=post.comments|length %}
-                {{ total }} comments |
-            {% with total_tags = post.display_tags|length %}
-                {{ total_tags }} tags
-            {% endwith %}
-            {% endwith %}
-        </p>
+        <div>
+            <div class="circle" style="float: left; width: 50px; background-image:url('{{ post.image }}'); margin-right: 30px;"></div>
+            <div style="float: left;">
+                <h2 style="color: #06c; text-decoration: none"><a href="{{ url_for('posts.detail', slug=post.slug) }}">{{ post.title }}</a></h2>
+                <p>
+                    <a href="#" id="abstract" class="btn btn-large btn-block btn-primary" title="Abstract">Abstract</a>
+                </p>
+                <div style="display: none;">
+                    {% if post.body %}
+                        {% if post.post_type == 'Quote' %}
+                            <blockquote>{{ post.body}}</blockquote>
+                            <p>{{ post.author }}</p>
+                        {% else %}
+                            <p>{{ post.body}}</p>
+                        {% endif %}
+                    {% endif %}
+                    {% if post.embed_code %}
+                        {{ post.embed_code|safe() }}
+                    {% endif %}
+                    {% if post.image_url %}
+                        <p><img src="{{ post.image_url }}" /><p>
+                    {% endif %}
+                </div>
+                <p>
+                    <!--{{ post.created_at.strftime('%H:%M %Y-%m-%d') }} |-->
+                    {% with total=post.comments|length %}
+                        {{ total }} comments |
+                    {% endwith %}
+                    {% with total_tags = post.display_tags|length %}
+                        {{ total_tags }} tags |
+                    {% endwith %}
+                    {% with authors = ", ".join(post.authors) %}
+                        {{ authors|truncate(50) }}
+                    {% endwith %}
+                </p>
+                </div>
+            </div>
+        <div style="clear: both;"></div>
     {% endfor %}
+    <br/>
+    <div class="pagination-holder clearfix">
+        <div style="width: 50%; margin: 0 auto;" id="light-pagination" class="pagination light-theme simple-pagination"></div>
+    </div>
 {% endblock %}
