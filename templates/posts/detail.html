@@ -47,6 +47,10 @@
         &nbsp; 
     </div>
 </div>
+    <h4>Tags</h4>
+    {% if post.display_tags %}
+        <p>{{ ",".join(post.display_tags) }}</p>
+    {% endif %}
   <hr>
   <h2>Comments</h2>
   {% if post.comments %}
@@ -56,10 +60,6 @@
       {{ comment.text }}
     {% endfor %}
   {% endif %}
-    <h2>Tags</h2>
-    {% if post.display_tags %}
-        <p>{{ ",".join(post.display_tags) }}</p>
-    {% endif %}
   <hr>
   <h2>Add a comment</h2>
   <form action="." method="post">
