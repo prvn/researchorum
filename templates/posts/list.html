@@ -1,10 +1,20 @@
 {% extends "base.html" %}
 {% block head %}
     {{ super() }}
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/simplePagination.css') }}"/>
     <script type="text/javascript">
         $(document).ready(function() {
             document.getElementById('search').value = "{{ query }}";
+            $('#light-pagination').pagination({
+                pages: {{ pagination_urls|length }},
+                hrefTextPrefix: getBaseUrl() + '?ipp=' + {{ ipp }} + '&pg=',
+                currentPage: {{ pg }},
+                cssStyle: 'light-theme'
+            });
         });
+        function getCurrentPage() {
+            return $("#light-pagination").pagination("getCurrentPage");
+        }
 		function toggle_visibility(id) {
        		var e = document.getElementById(id);
        		if(e.style.display == 'block')
@@ -46,13 +56,20 @@
                     <!--{{ post.created_at.strftime('%H:%M %Y-%m-%d') }} |-->
                     {% with total=post.comments|length %}
                         {{ total }} comments |
-                    {% with total_tags = post.display_tags|length %}
-                        {{ total_tags }} tags
                     {% endwith %}
+                    {% with total_tags = post.display_tags|length %}
+                        {{ total_tags }} tags |
+                    {% endwith %}
+                    {% with authors = ", ".join(post.authors) %}
+                        {{ authors|truncate(50) }}
                     {% endwith %}
                 </p>
                 </div>
             </div>
         <div style="clear: both;"></div>
     {% endfor %}
+    <br/>
+    <div class="pagination-holder clearfix">
+        <div style="width: 50%; margin: 0 auto;" id="light-pagination" class="pagination light-theme simple-pagination"></div>
+    </div>
 {% endblock %}
