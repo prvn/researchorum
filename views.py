@@ -57,7 +57,14 @@ class ListView(MethodView):
             rand = random.randrange(1, 8)
             post.image = request.base_url + "static/images/" + str(rand) + ".jpg"
 
-        return render_template('posts/list.html', posts=posts, pagination_urls=pagination_urls, ipp=ipp, pg=page)
+        context = {
+            "posts" : posts,
+            "pagination_urls" : pagination_urls,
+            "ipp" : ipp,
+            "pg" : page
+        }
+
+        return render_template('posts/list.html', **context)
 
 class SearchTitleView(MethodView):
 
