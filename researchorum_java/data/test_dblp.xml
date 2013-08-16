@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE dblp SYSTEM "dblp.dtd">
+<dblp>
+<article mdate="2002-01-03" key="persons/Codd71a">
+<author>E. F. Codd</author>
+<title>Further Normalization of the Data Base Relational Model.</title>
+<journal>IBM Research Report, San Jose, California</journal>
+<volume>RJ909</volume>
+<month>August</month>
+<year>1971</year>
+<cdrom>ibmTR/rj909.pdf</cdrom>
+<ee>db/labs/ibm/RJ909.html</ee>
+</article>
+
+<article mdate="2002-01-03" key="persons/Hall74">
+<author>Patrick A. V. Hall</author>
+<title>Common Subexpression Identification in General Algebraic Systems.</title>
+<journal>Technical Rep. UKSC 0060, IBM United Kingdom Scientific Centre</journal>
+<month>November</month>
+<year>1974</year>
+</article>
+
+<inproceedings mdate="2013-06-20" key="journals/procedia/Izzo12">
+<author>Margaretha Vreeburg Izzo</author>
+<title>Universal Design for Learning: Enhancing Achievement of Students with Disabilities.</title>
+<pages>343-350</pages>
+<year>2012</year>
+<crossref>conf/dsai/2012</crossref>
+<booktitle>DSAI</booktitle>
+<ee>http://dx.doi.org/10.1016/j.procs.2012.10.039</ee>
+<url>db/journals/procedia/procedia14.html#Izzo12</url>
+</inproceedings>
+
+<proceedings mdate="2011-05-13" key="journals/thipeac/2009-2">
+<editor>Per Stenstr&ouml;m</editor>
+<title>Transactions on High-Performance Embedded Architectures and Compilers II</title>
+<volume>5470</volume>
+<year>2009</year>
+<ee>http://dx.doi.org/10.1007/978-3-642-00904-4</ee>
+<isbn>978-3-642-00903-7</isbn>
+<booktitle>T. HiPEAC</booktitle>
+<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
+<publisher>Springer</publisher>
+<url>db/journals/thipeac/thipeac2.html</url>
+</proceedings>
+
+</dblp>
