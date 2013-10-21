@@ -1,6 +1,6 @@
-package org.researchorum.dblp.records;
-import org.researchorum.dblp.util.RecordEnum;
-import org.researchorum.dblp.util.Util;
+package com.researchorum.dblp.records;
+import com.researchorum.dblp.util.RecordEnum;
+import com.researchorum.dblp.util.Util;
 
 
 

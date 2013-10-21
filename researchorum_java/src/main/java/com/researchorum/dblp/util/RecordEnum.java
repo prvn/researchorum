@@ -1,4 +1,4 @@
-package org.researchorum.dblp.util;
+package com.researchorum.dblp.util;
 
 
 /*
