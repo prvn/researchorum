@@ -148,7 +148,7 @@ public class DblpParser {
         private void Message(String mode, SAXParseException exception) {
             System.out.println(mode + " Line: " + exception.getLineNumber()
                     + " URI: " + exception.getSystemId() + "\n" + " Message: "
-                    + exception.getMessage());
+                    + exception);
         }
 
         public void warning(SAXParseException exception) throws SAXException {
@@ -175,7 +175,7 @@ public class DblpParser {
             SAXParserFactory parserFactory = SAXParserFactory.newInstance();
             SAXParser parser = parserFactory.newSAXParser();
             ConfigHandler handler = new ConfigHandler();
-            parser.getXMLReader().setFeature("http://xml.org/sax/features/validation", true);
+            //parser.getXMLReader().setFeature("http://xml.org/sax/features/validation", true);
             parser.parse(new File(uri), handler);
         } catch (IOException e) {
             System.out.println("Error reading URI: " + e.getMessage());
