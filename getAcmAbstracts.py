@@ -44,7 +44,7 @@ def process_data(threadName, q):
             link = q.get()
             extract_acm_abstract(link)
             queueLock.release()
-            print "%s processing %s" % (threadName, link)
+            #print "%s processing %s" % (threadName, link)
         else:
             queueLock.release()
         
@@ -132,7 +132,6 @@ def extract_acm_abstract(link):
     status = 0
     global collection
     resp = requests.get(link)
-    print "Got response: ", resp.status_code
     if resp.status_code == 200:
         data = resp.text
         try:
