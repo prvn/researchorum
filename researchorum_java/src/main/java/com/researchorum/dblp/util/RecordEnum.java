@@ -1,5 +1,4 @@
-package org.researchorum.dblp.util;
-
+package com.researchorum.dblp.util;
 
 /*
  * <!ELEMENT dblp (article|inproceedings|proceedings|book|incollection|phdthesis|mastersthesis|www)*>

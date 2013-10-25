@@ -1,23 +1,18 @@
-package org.researchorum.dblp.records;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.researchorum.dblp.util.RecordEnum;
-import org.researchorum.dblp.util.Util;
+package com.researchorum.dblp.records;
+import com.researchorum.dblp.util.RecordEnum;
+import com.researchorum.dblp.util.Util;
 
 
-public class Proceedings extends Record {
+
+public class Inproceedings extends Record {
 	
-	private boolean isProceedingsTag;
+	private boolean isInproceedingsTag;
 	private String booktitle;
 	private boolean isBookTitleTag;
-	private boolean isEditorTag;
-	private List<String> editorList = new ArrayList<String>();;
 	
-	public Proceedings() {
-		setProceedingsTag(true);
-		setRecordType(RecordEnum.PROCEEDINGS);
+	public Inproceedings() {
+		setInproceedingsTag(true);
+		setRecordType(RecordEnum.INPROCEEDINGS);
 	}
 
 	@Override
@@ -28,10 +23,6 @@ public class Proceedings extends Record {
         }
         if(Util.AUTHOR_TAG.equals(rawName)) {
         	setAuthorTag(true);
-        	return;
-        }
-        if(Util.EDITOR_TAG.equals(rawName)) {
-        	setEditorTag(true);
         	return;
         }
         if(Util.YEAR_TAG.equals(rawName)) {
@@ -62,10 +53,6 @@ public class Proceedings extends Record {
         	this.getAuthorsList().add(fieldValue);
         	setAuthorTag(false);
         }
-        if(isEditorTag()) {
-        	this.getEditorList().add(fieldValue);
-        	setEditorTag(false);
-        }
         if(isYearTag()) {
         	this.setYear(fieldValue);
         	setYearTag(false);
@@ -84,14 +71,6 @@ public class Proceedings extends Record {
         }
 	}
 
-	public boolean isProceedingsTag() {
-		return isProceedingsTag;
-	}
-
-	public void setProceedingsTag(boolean isProceedingsTag) {
-		this.isProceedingsTag = isProceedingsTag;
-	}
-
 	public boolean isBookTitleTag() {
 		return isBookTitleTag;
 	}
@@ -108,20 +87,12 @@ public class Proceedings extends Record {
 		this.booktitle = booktitle;
 	}
 
-	public List<String> getEditorList() {
-		return editorList;
+	public boolean isInproceedingsTag() {
+		return isInproceedingsTag;
 	}
 
-	public void setEditorList(List<String> editorList) {
-		this.editorList = editorList;
-	}
-
-	public boolean isEditorTag() {
-		return isEditorTag;
-	}
-
-	public void setEditorTag(boolean isEditorTag) {
-		this.isEditorTag = isEditorTag;
+	public void setInproceedingsTag(boolean isInproceedingsTag) {
+		this.isInproceedingsTag = isInproceedingsTag;
 	}
 
 }

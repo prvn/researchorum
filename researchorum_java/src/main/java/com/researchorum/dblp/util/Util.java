@@ -1,9 +1,9 @@
-package org.researchorum.dblp.util;
+package com.researchorum.dblp.util;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.researchorum.dblp.records.Inproceedings;
+import com.researchorum.dblp.records.Inproceedings;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;

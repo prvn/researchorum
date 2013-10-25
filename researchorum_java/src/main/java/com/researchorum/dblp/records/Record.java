@@ -1,10 +1,10 @@
-package org.researchorum.dblp.records;
+package com.researchorum.dblp.records;
+
+import com.researchorum.dblp.util.PublicationEnum;
+import com.researchorum.dblp.util.RecordEnum;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.researchorum.dblp.util.PublicationEnum;
-import org.researchorum.dblp.util.RecordEnum;
 
 
 public abstract class Record {
