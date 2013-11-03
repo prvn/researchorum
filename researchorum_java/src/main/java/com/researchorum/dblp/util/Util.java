@@ -20,11 +20,11 @@ public class Util {
 	public static final String INPROCEEDINGS_TAG = "inproceedings";
 	public static final String PUBLISHER_TAG = "publisher";
 	public static final String BOOKTITLE_TAG = "booktitle";
-	
+
 	Util() {
-		
+
 	}
-	
+
 	public static void removeUnwantedTagsFromJson(JSONObject jsonObj) {
 		jsonObj.remove("isInproceedingsTag");
 		jsonObj.remove("isProceedingsTag");

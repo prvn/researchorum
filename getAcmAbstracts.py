@@ -3,12 +3,15 @@
 import sys
 from xml.dom import minidom
 import requests
+import requesocks
 import pymongo
 from pymongo import MongoClient
 import bs4
 import Queue
 import threading
 import time
+
+USE_REQUESOCKS = True
 
 NON_ACM_LINKS = ["doi.ieeecomputersociety.org", "ieee", "ippserv.ugent.be", "springer", "computer.org", "www.graphicsinterface.org", "www.sigda.org", "decsai.ugr.es", "dx.doi.org/10.1007", "dx.doi.org/10.1109", "dx.doi.org/10.1117", "dx.doi.org/10.1093", "dx.doi.org/10.2991", "dx.doi.org/10.1016", "dx.doi.org/10.1002", "dx.doi.org/10.1504", "dx.doi.org/10.1023", "dx.doi.org/10.1137", "www.usenix.org", "www.zpid.de", "www.supercomp.org", "www.stringology.org", "psc.felk.cvut.cz", "www2003.org", "sunsite.informatik.rwth-aachen.de", "arxiv.org", "www.igi-pub.com", "www.fujipress.jp", "jair.org", "www.cs.washington.edu", "www.acmqueue.org"]
 
@@ -93,7 +96,7 @@ def get_links():
             acm_links.append(str(i) + str("&preflayout=flat"))
 
     print "Total ACM links: ", len(acm_links)
-    #print acm_links[:10]
+    print acm_links[:10]
     return acm_links
 
 def get_abstracts(links):
@@ -114,8 +117,6 @@ def get_abstracts(links):
     queueLock.acquire()
     for link in links:
         workQueue.put(link)
-        #thread.start_new_thread(extract_acm_abstract, (link))
-        #extract_acm_abstract(link)
     queueLock.release()
 
     # Wait for queue to empty
@@ -131,7 +132,15 @@ def extract_acm_abstract(link):
     data = None
     status = 0
     global collection
-    resp = requests.get(link)
+
+    if USE_REQUESOCKS:
+        session = requesocks.session() 
+        session.proxies = {'https': 'socks5://127.0.0.1:9050', 'http': 'socks5://127.0.0.1:9050'}
+        resp = session.get(link)
+    else:
+        resp = requests.get(link)
+
+    status = resp.status_code
     if resp.status_code == 200:
         data = resp.text
         try:
@@ -141,6 +150,7 @@ def extract_acm_abstract(link):
                 if abs_div is not None:
                     abstract = abs_div.find_all('p')
                     whole_abstract = ""
+                    print abstract
                     for paragraph in abstract:
                         s = ""
                         for line in paragraph:
@@ -149,9 +159,12 @@ def extract_acm_abstract(link):
                         whole_abstract = whole_abstract + s
                 
                     # Write whole_abstract to mongo here
-                    collection.update({"sourceUrl" : link.split('&')[0]}, {"$set" : {"abstract" : whole_abstract, "publication" : "ACM"}})
-
+                    url = link.split('&')[0]
+                    collection.update({"sourceUrl" : url}, {"$set" : {"abstract" : whole_abstract, "publication" : "ACM"}})
                     status = resp.status_code
+                else:
+                    print "No abstract available"
+                    collection.update({"sourceUrl" : url}, {"$set" : {"abstract" : "none", "publication" : "ACM"}})
         except ValueError:
             status = resp.status_code 
             #print "Not a ACM link"
@@ -159,8 +172,9 @@ def extract_acm_abstract(link):
         #print "Failed to fetch page - ", resp.status_code
         status = resp.status_code
 
-    if resp is not None:
-        resp.close()
+    if not USE_REQUESOCKS:
+        if resp is not None:
+            resp.close()
 
     print link, " - ", status
 
