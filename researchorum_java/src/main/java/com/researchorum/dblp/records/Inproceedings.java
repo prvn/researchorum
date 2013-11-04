@@ -6,12 +6,10 @@ import com.researchorum.dblp.util.Util;
 
 public class Inproceedings extends Record {
 	
-	private boolean isInproceedingsTag;
 	private String booktitle;
 	private boolean isBookTitleTag;
 	
 	public Inproceedings() {
-		setInproceedingsTag(true);
 		setRecordType(RecordEnum.INPROCEEDINGS);
 	}
 
@@ -50,7 +48,7 @@ public class Inproceedings extends Record {
             setTitleTag(false);
         }
         if(isAuthorTag()) {
-        	this.getAuthorsList().add(fieldValue);
+        	this.getAuthors().add(fieldValue);
         	setAuthorTag(false);
         }
         if(isYearTag()) {
@@ -86,13 +84,4 @@ public class Inproceedings extends Record {
 	public void setBooktitle(String booktitle) {
 		this.booktitle = booktitle;
 	}
-
-	public boolean isInproceedingsTag() {
-		return isInproceedingsTag;
-	}
-
-	public void setInproceedingsTag(boolean isInproceedingsTag) {
-		this.isInproceedingsTag = isInproceedingsTag;
-	}
-
 }

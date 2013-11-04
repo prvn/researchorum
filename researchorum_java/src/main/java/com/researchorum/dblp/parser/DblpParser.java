@@ -75,15 +75,15 @@ public class DblpParser {
                 inproceedings = new Inproceedings();
                 return;
             }
-            if (article != null && article.isArticleTag()) {
+            if (article != null) {
                 article.processTags(rawName);
                 return;
             }
-            if (proceedings != null && proceedings.isProceedingsTag()) {
+            if (proceedings != null) {
                 proceedings.processTags(rawName);
                 return;
             }
-            if (inproceedings != null && inproceedings.isInproceedingsTag()) {
+            if (inproceedings != null) {
                 inproceedings.processTags(rawName);
                 return;
             }
@@ -100,7 +100,7 @@ public class DblpParser {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                article.setArticleTag(false);
+                //article.setArticleTag(false);
                 article = null;
             }
             if (Util.PROCEEDINGS_TAG.equals(rawName)) {
@@ -111,7 +111,7 @@ public class DblpParser {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                proceedings.setProceedingsTag(false);
+                //proceedings.setProceedingsTag(false);
                 proceedings = null;
             }
             if (Util.INPROCEEDINGS_TAG.equals(rawName)) {
@@ -122,7 +122,7 @@ public class DblpParser {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                inproceedings.setInproceedingsTag(false);
+                //inproceedings.setInproceedingsTag(false);
                 inproceedings = null;
             }
         }
@@ -130,15 +130,15 @@ public class DblpParser {
         public void characters(char[] ch, int start, int length)
                 throws SAXException {
 
-            if (article != null && article.isArticleTag()) {
+            if (article != null) {
                 article.populateFields(new String(ch, start, length));
                 return;
             }
-            if (proceedings != null && proceedings.isProceedingsTag()) {
+            if (proceedings != null) {
                 proceedings.populateFields(new String(ch, start, length));
                 return;
             }
-            if (inproceedings != null && inproceedings.isInproceedingsTag()) {
+            if (inproceedings != null) {
                 inproceedings.populateFields(new String(ch, start, length));
                 return;
             }

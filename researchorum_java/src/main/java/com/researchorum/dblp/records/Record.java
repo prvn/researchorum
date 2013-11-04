@@ -6,11 +6,11 @@ import com.researchorum.dblp.util.RecordEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public abstract class Record {
+
 	private RecordEnum recordType;
 	private PublicationEnum publicationType;
-	private List<String> authorsList = new ArrayList<String>();
+	private List<String> authors = new ArrayList<String>();
 	private String title;
 	private String year;
 	private String sourceUrl;
@@ -41,12 +41,12 @@ public abstract class Record {
 		this.publicationType = publicationType;
 	}
 
-	public List<String> getAuthorsList() {
-		return authorsList;
+	public List<String> getAuthors() {
+		return authors;
 	}
 
-	public void setAuthorsList(List<String> authorsList) {
-		this.authorsList = authorsList;
+	public void setAuthors(List<String> authors) {
+		this.authors = authors;
 	}
 
 	public String getTitle() {

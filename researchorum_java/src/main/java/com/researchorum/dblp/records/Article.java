@@ -1,17 +1,14 @@
 package com.researchorum.dblp.records;
+
 import com.researchorum.dblp.util.RecordEnum;
 import com.researchorum.dblp.util.Util;
 
-
-
 public class Article extends Record{
 	
-	private boolean isArticleTag;
 	private String journal;
 	private boolean isJournalTag;
 	
 	public Article() {
-		setArticleTag(true);
 		setRecordType(RecordEnum.ARTICLE);
 	}
 
@@ -23,14 +20,6 @@ public class Article extends Record{
 		this.journal = journal;
 	}
 
-	public boolean isArticleTag() {
-		return isArticleTag;
-	}
-
-	public void setArticleTag(boolean isArticle) {
-		this.isArticleTag = isArticle;
-	}
-	
 	public boolean isJournalTag() {
 		return isJournalTag;
 	}
@@ -74,7 +63,7 @@ public class Article extends Record{
             setTitleTag(false);
         }
         if(isAuthorTag()) {
-        	this.getAuthorsList().add(fieldValue);
+        	this.getAuthors().add(fieldValue);
         	setAuthorTag(false);
         }
         if(isYearTag()) {

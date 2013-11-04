@@ -9,14 +9,12 @@ import java.util.List;
 
 public class Proceedings extends Record {
 	
-	private boolean isProceedingsTag;
 	private String booktitle;
 	private boolean isBookTitleTag;
 	private boolean isEditorTag;
 	private List<String> editorList = new ArrayList<String>();;
 	
 	public Proceedings() {
-		setProceedingsTag(true);
 		setRecordType(RecordEnum.PROCEEDINGS);
 	}
 
@@ -59,7 +57,7 @@ public class Proceedings extends Record {
             setTitleTag(false);
         }
         if(isAuthorTag()) {
-        	this.getAuthorsList().add(fieldValue);
+        	this.getAuthors().add(fieldValue);
         	setAuthorTag(false);
         }
         if(isEditorTag()) {
@@ -82,14 +80,6 @@ public class Proceedings extends Record {
         	this.setPublisher(fieldValue);
         	setPublisherTag(false);
         }
-	}
-
-	public boolean isProceedingsTag() {
-		return isProceedingsTag;
-	}
-
-	public void setProceedingsTag(boolean isProceedingsTag) {
-		this.isProceedingsTag = isProceedingsTag;
 	}
 
 	public boolean isBookTitleTag() {
