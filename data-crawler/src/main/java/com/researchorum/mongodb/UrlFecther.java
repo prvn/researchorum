@@ -1,6 +1,7 @@
 package com.researchorum.mongodb;
 
 import com.mongodb.*;
+import com.researchorum.utils.Config;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -11,9 +12,6 @@ import java.util.*;
 public class UrlFecther {
 
     private static final Logger logger = Logger.getLogger(UrlFecther.class);
-
-    public static final String ACM_LINKS = "acm_links";
-    public static final String IEEE_LINKS = "ieee_links";
 
     private static final List<String> NON_ACM_LINKS = Arrays.asList(new String[]{
             "doi.ieeecomputersociety.org", "ieee", "ippserv.ugent.be", "springer", "computer.org",
@@ -41,11 +39,23 @@ public class UrlFecther {
         this.collection = this.db.getCollection(collection);
     }
 
+    /**
+     * Gets the electronic edition links of dblp from mongodb
+     * as a container
+     *
+     * @return {@link UrlContainer} Container that holds different types of links by publication
+     */
     public UrlContainer getLinks() {
 
         List<String> acmLinks = new ArrayList<String>();
         List<String> ieeeLinks = new ArrayList<String>();
 
+        /*
+            Get documents that only have source url, but not abstract and publication.
+
+            We also add only publication for articles that doesnt have any abstract on their
+            respective web sites.
+         */
         DBObject query = new BasicDBObject("sourceUrl", new BasicDBObject("$exists", true));
         query.put("abstract", new BasicDBObject("$exists", false));
 
@@ -109,10 +119,10 @@ public class UrlFecther {
     }
 
     public static List<String> getAvailableLinks() {
-        return Arrays.asList(new String[]{ACM_LINKS, IEEE_LINKS});
+        return Arrays.asList(new String[]{UrlContainer.ACM_LINKS, UrlContainer.IEEE_LINKS});
     }
 
     public static void main(String[] args) throws Exception {
-        new UrlFecther("dblp", "records").getLinks();
+        new UrlFecther(Config.MONGODB_DB, Config.MONGODB_COLLECTION).getLinks();
     }
 }
