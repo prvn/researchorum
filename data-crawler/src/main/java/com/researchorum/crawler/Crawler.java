@@ -1,9 +1,11 @@
-package com.researchorum.mongodb;
+package com.researchorum.crawler;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
+import com.researchorum.utils.Config;
+import com.researchorum.mongodb.UrlFecther;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,17 +31,19 @@ public class Crawler {
     private DBCollection dbCollection;
 
     public Crawler() throws Exception {
-        this.dbCollection = new MongoClient().getDB("dblp").getCollection("records");
-        this.urlFecther = new UrlFecther("dblp", "records");
+        this.dbCollection = new MongoClient().getDB(Config.MONGODB_DB).getCollection(Config.MONGODB_COLLECTION);
+        this.urlFecther = new UrlFecther(Config.MONGODB_DB, Config.MONGODB_COLLECTION);
     }
 
-    private void getAbstractsAndWrite() {
+    private void getAbstractsAndWrite(PublicationType[] types) {
         List<String> links = urlFecther.getLinks().getIeeeUrls();
         for (String link : links) {
+            logger.info("Processing link: " + link);
             String _abstract = null;
             try {
                 URL url = new URL(link);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setReadTimeout(5000);
                 connection.setInstanceFollowRedirects(true);
 
                 int statusCode = connection.getResponseCode();
@@ -93,20 +97,21 @@ public class Crawler {
                     } else {
                         logger.error("Failed to save abstract to mongodb - " + link + "; Error: " + writeResult.getError());
                     }
+                } else if (statusCode == 404) {
+                    continue;
                 } else {
                     logger.error("Fetching page failed with status " + statusCode + " - " + link);
                     break;
                 }
             } catch (MalformedURLException e) {
-                e.printStackTrace();
-                continue;
+                logger.error(e);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error(e);
             }
         }
     }
 
-    public static void main(String[] args) throws Exception{
-        new Crawler().getAbstractsAndWrite();
+    public static void main(String[] args) throws Exception {
+        new Crawler().getAbstractsAndWrite(new PublicationType[]{PublicationType.IEEE});
     }
 }
