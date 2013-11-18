@@ -22,6 +22,7 @@ function getBaseUrl() {
 
     return window.location.origin;
 }
+
 function buildUrl(query_term) {
     var base_url = getBaseUrl();
 

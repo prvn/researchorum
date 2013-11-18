@@ -34,7 +34,7 @@
     <!-- MongoTemplate for connecting and quering the documents in the database -->
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg ref="mongo"/>
-        <constructor-arg value="my_tumble_log"/>
+        <constructor-arg value="dblp"/>
     </bean>
 
     <!-- Use this post processor to translate any MongoExceptions thrown in @Repository annotated classes -->

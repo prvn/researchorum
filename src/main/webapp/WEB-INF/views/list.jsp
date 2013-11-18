@@ -34,13 +34,15 @@
                 <p><a href="#" id="abstract" class="btn btn-large btn-block btn-primary" title="Abstract">Abstract</a></p>
                 <div style="display: none;">
                     <p>"${post.body}"</p>
-                    <!--<p><img src="${post.image}" /><p>-->
+                    <p><img src="${post.image}" /><p>
                 </div>
                 <p>
+                <%--
                 <c:set var="total" value="${fn:length(post.comments)}" />
                 ${total} comments |
                 <c:set var="total_tags" value="${fn:length(post.tags)}" />
                 ${total_tags} tags |
+                --%>
                 <c:forEach var="author" items="${post.authors}" varStatus="author_list">
                 <c:set var="author_list" value="${author_list} ${author}" />
                 </c:forEach>
@@ -55,5 +57,5 @@
 </c:forEach>
 <br/>
 <div class="pagination-holder clearfix">
-    <div style="width: 50%; margin: 0 auto;" id="light-pagination" class="light-theme simple-pagination"></div>
+    <%--<div style="width: 50%; margin: 0 auto;" id="light-pagination" class="light-theme simple-pagination"></div>--%>
 </div>

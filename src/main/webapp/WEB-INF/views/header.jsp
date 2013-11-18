@@ -23,7 +23,7 @@
     <div class="container">
         <div class="content" style="padding-top: 60px;">
             <form name="search-form" id="search-form" action="search">
-                <input style="width: 400px; height: 25px;" type="text" id="keyword" name="keyword" placeholder="Search (ex: hadoop or #hadoop for tag search)"/>
+                <input style="width: 400px; height: 25px;" type="text" id="kw" name="kw" placeholder="Search (ex: hadoop or #hadoop for tag search)"/>
             </form>
         </div>
     </div>

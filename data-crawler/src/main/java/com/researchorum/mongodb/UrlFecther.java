@@ -1,6 +1,7 @@
 package com.researchorum.mongodb;
 
 import com.mongodb.*;
+import com.researchorum.crawler.PublicationType;
 import com.researchorum.utils.Config;
 import org.apache.log4j.Logger;
 
@@ -81,8 +82,8 @@ public class UrlFecther {
             dbCursor.close();
         }
 
-        urlContainer.setAcmUrls(acmLinks);
-        urlContainer.setIeeeUrls(ieeeLinks);
+        urlContainer.setLinksByType(PublicationType.ACM, acmLinks);
+        urlContainer.setLinksByType(PublicationType.IEEE, ieeeLinks);
 
         return urlContainer;
     }
@@ -118,8 +119,8 @@ public class UrlFecther {
         return false;
     }
 
-    public static List<String> getAvailableLinks() {
-        return Arrays.asList(new String[]{UrlContainer.ACM_LINKS, UrlContainer.IEEE_LINKS});
+    public static List<PublicationType> getAvailableLinks() {
+        return Arrays.asList(PublicationType.values());
     }
 
     public static void main(String[] args) throws Exception {

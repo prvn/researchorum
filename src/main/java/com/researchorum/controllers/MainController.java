@@ -1,6 +1,8 @@
 package com.researchorum.controllers;
 
-import com.researchorum.models.Record;
+import com.researchorum.context.ResearchorumContext;
+import com.researchorum.context.ResearchorumContextFactory;
+import com.researchorum.models.SearchPageModel;
 import com.researchorum.services.RecordService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,33 +37,15 @@ public class MainController extends AbstractController {
     }
 
     @RequestMapping(value = "search", method = RequestMethod.GET)
-    public String searchResultsPage(HttpServletRequest request, ModelMap modelMap) {
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        logger.info("Parameters map: " + parameterMap.toString());
-        int ipp = 2;
-        int page = 1;
-        String keyword = parameterMap.get("keyword")[0];
-        String[] ippParam = parameterMap.get("ipp");
-        if (ippParam != null && ippParam.length > 0) {
-            ipp = Integer.parseInt(ippParam[0]);
-        }
-        String[] pageParam = parameterMap.get("pg");
-        if (pageParam != null && pageParam.length > 0) {
-            page = Integer.parseInt(pageParam[0]);
-        }
+    public String searchResultsPage(ModelMap modelMap) {
+        ResearchorumContext ctx = ResearchorumContextFactory.getContext();
+        Map<String, String[]> parameterMap = ctx.getUrlParams();
+        String keyword = parameterMap.get("kw")[0];
 
-        logger.info("ipp: " + ipp + "; pg: " + page);
-
-        List<Record> records = recordService.getRecordsByTitle(keyword, ipp, page);
+        SearchPageModel searchPageModel = recordService.getRecordsByTitle(keyword);
 
         modelMap.addAttribute("keyword", keyword);
-        modelMap.addAttribute("records", records);
-
-        for (Record p : records) {
-            logger.info(p.toString());
-        }
-
-        logger.info("Posts returned: " + records.size());
+        modelMap.addAttribute("records", searchPageModel.getRecords());
 
         return "search";
     }

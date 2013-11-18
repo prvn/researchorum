@@ -1,7 +1,8 @@
-package com.researchorum.context;
+package com.researchorum.search;
 
 /**
  * @author pbathala
  */
 public class SearchContext {
+
 }
