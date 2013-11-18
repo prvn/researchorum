@@ -1,8 +1,8 @@
 package com.researchorum.context;
 
 import org.apache.log4j.Logger;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,25 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author pbathala
  */
-public class ResearchorumInterceptor implements HandlerInterceptor {
+public class ResearchorumInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger logger = Logger.getLogger(ResearchorumInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //logger.info("Pre handle");
+        logger.debug("Pre handling the request");
         ResearchorumContextFactory.create(request, response);
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        //logger.info("Post handle");
+        logger.debug("Post handling the request");
         ResearchorumContextFactory.reset();
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        //logger.info("after completion");
     }
 }

@@ -10,7 +10,7 @@ public class ResearchorumContextFactory {
 
     private static InheritableThreadLocal<ResearchorumContext> context = new InheritableThreadLocal<ResearchorumContext>();
 
-    public static ResearchorumContext create(final HttpServletRequest request, final HttpServletResponse response) {
+    protected static ResearchorumContext create(final HttpServletRequest request, final HttpServletResponse response) {
         ResearchorumContext ctx = new ResearchorumContext(request, response);
         setContext(ctx);
 
@@ -21,7 +21,7 @@ public class ResearchorumContextFactory {
         return context.get();
     }
 
-    public static void setContext(final ResearchorumContext researchorumContext) {
+    protected static void setContext(final ResearchorumContext researchorumContext) {
         context.set(researchorumContext);
     }
 

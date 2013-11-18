@@ -9,14 +9,23 @@ import java.util.List;
 /**
  * @author pbathala
  */
-@Document(collection = "posts")
+@Document(collection = "records")
 public class Record {
+
+    public static final String TITLE_FIELD = "title";
+    private static final String DEFAULT_IMAGE_URL = "/resources/images/default_profile_pic.jpg";
 
     @Id
     private String id;
 
     @Field("title")
     private String title;
+
+    @Field("year")
+    private int year;
+
+    @Field("recordType")
+    private String recordType;
 
     @Field("slug")
     private String slug;
@@ -30,7 +39,7 @@ public class Record {
     @Field("comments")
     private List<Comment> comments;
 
-    @Field("authors")
+    @Field("authorsList")
     private List<String> authors;
 
     @Field("body")
@@ -52,6 +61,22 @@ public class Record {
         this.title = title;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getRecordType() {
+        return recordType;
+    }
+
+    public void setRecordType(String recordType) {
+        this.recordType = recordType;
+    }
+
     public String getSlug() {
         return slug;
     }
@@ -61,6 +86,9 @@ public class Record {
     }
 
     public String getImage() {
+        if (image == null || image.isEmpty()) {
+            image = DEFAULT_IMAGE_URL;
+        }
         return image;
     }
 
@@ -105,11 +133,19 @@ public class Record {
         sb.append("[");
         sb.append("id: " + id + ", ");
         sb.append("body: " + body + ", ");
+        sb.append("year: " + year + ", ");
+        sb.append("recordType: " + recordType + ", ");
         sb.append("title: " + title + ", ");
         sb.append("slug: " + slug + ", ");
-        sb.append("tags: " + tags.toString() + ", ");
-        sb.append("comments: " + comments.toString() + ", ");
-        sb.append("authors: " + authors.toString());
+        if (tags != null) {
+            sb.append("tags: " + tags.toString() + ", ");
+        }
+        if (comments != null) {
+            sb.append("comments: " + comments.toString() + ", ");
+        }
+        if (authors != null) {
+            sb.append("authors: " + authors.toString());
+        }
         sb.append("]");
 
         return sb.toString();
